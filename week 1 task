@@ -1,0 +1,181 @@
+#Q1. Basic Calculator with User Input: Write a Python program to create a basic calculator using conditional statements. The program should prompt the user to enter two numbers and an arithmetic operator (+, -, *, or /) and then display the result.
+
+num1 = float(input("Enter the first number: "))
+operator = input("Enter an arithmetic operator (+, -, *, or /): ")
+num2 = float(input("Enter the second number: "))
+
+ 
+if operator == "+":
+    result = num1 + num2
+elif operator == "-":
+    result = num1 - num2
+elif operator == "*":
+    result = num1 * num2
+elif operator == "/":
+    # Check for division by zero
+    if num2 != 0:
+        result = num1 / num2
+    else:
+        print("Error: Cannot be divided  by zero.")
+        result = None
+else:
+    print("Error: Invalid operator. Please use +, -, *, or /.")
+    result = None
+
+ #Display the result
+if result is not None:
+    print(f"Result: {result}")
+
+#Q2. Quick Sort Implementation with User Input: Implement the quicksort algorithm in Python to sort an array of integers. Take the input array from the user.
+
+def partition(arr, low, high):
+   
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[j], arr[i] = arr[i], arr[j]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+def quicksort(arr, low, high):
+    """
+    Recursive function to perform quicksort on the given array.
+    """
+    if low < high:
+        pi = partition(arr, low, high)
+        quicksort(arr, low, pi - 1)
+        quicksort(arr, pi + 1, high)
+
+try:
+    input_arr = input("Enter space-separated integers for the array: ")
+    user_arr = list(map(int, input_arr.split()))
+except ValueError:
+    print("Error: Please enter valid integers separated by spaces.")
+    exit()
+
+# Sort the array using quicksort
+quicksort(user_arr, 0, len(user_arr) - 1)
+
+# Display the sorted array
+print("Sorted Array in Ascending Order:")
+print(user_arr)
+
+
+#Q3. Exception Handling in Division: Write a Python program for division, incorporating proper exception handling to deal with division by zero.
+def safe_division(dividend, divisor):
+  
+     try:
+        result = dividend / divisor
+        return result
+    except ZeroDivisionError:
+        print("Error: Division by zero is not allowed.")
+        return None
+
+
+try:
+    dividend = float(input("Enter the dividend: "))
+    divisor = float(input("Enter the divisor: "))
+except ValueError:
+    print("Error: Please enter valid numeric values.")
+    exit()
+
+result = safe_division(dividend, divisor)
+
+
+if result is not None:
+    print(f"Result of {dividend} / {divisor} = {result}")
+
+#Q4.  Interactive Menu Program with Infinite Loop: Create a Python program that presents the user with the following options in an infinite loop:
+
+     Press 1 to calculate the factorial of a number.
+     Press 2 to check whether a given number is prime or not.
+     Press 3 to check if a given string is a palindrome.
+     Press 4 to check if a given number is Armstrong or not.
+     Press 5 to exit the program
+
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+def is_palindrome(s):
+    return s == s[::-1]
+
+def is_armstrong(n):
+    sum = 0
+    temp = n
+    while temp > 0:
+        digit = temp % 10
+        sum += digit ** 3
+        temp //= 10
+    return n == sum
+
+while True:
+    print("Press 1 to calculate the factorial of a number.")
+    print("Press 2 to check whether a given number is prime or not.")
+    print("Press 3 to check if a given string is a palindrome.")
+    print("Press 4 to check if a given number is Armstrong or not.")
+    print("Press 5 to exit the program.")
+    
+    choice = int(input("Enter your choice: "))
+    
+    if choice == 1:
+        num = int(input("Enter a number: "))
+        print("The factorial of", num, "is", factorial(num))
+    elif choice == 2:
+        num = int(input("Enter a number: "))
+        if is_prime(num):
+            print(num, "is a prime number.")
+        else:
+            print(num, "is not a prime number.")
+    elif choice == 3:
+        s = input("Enter a string: ")
+        if is_palindrome(s):
+            print(s, "is a palindrome.")
+        else:
+            print(s, "is not a palindrome.")
+    elif choice == 4:
+        num = int(input("Enter a number: "))
+        if is_armstrong(num):
+            print(num, "is an Armstrong number.")
+        else:
+            print(num, "is not an Armstrong number.")
+    elif choice == 5:
+        print("Exiting the program.")
+        break
+    else:
+        print("Invalid choice. Please enter a number between 1 and 5.")
+
+
+#Q5. . Employee Details File Handling: Write a Python program to enter employee details and store them in a file named "EmpData". Allow the user to input employee details such as name, age, salary, etc
+def write_employee_details():
+    name = input("Enter employee's name: ")
+    age = int(input("Enter employee's age: "))
+    salary = int(input("Enter employee's salary: "))
+
+    with open("int\EmpData.txt", "a") as file:
+        file.write(f"Name: {name}, Age: {age}, Salary: {salary}\n")
+
+while True:
+    print("Press 1 to enter employee details.")
+    print("Press 2 to exit.")
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        write_employee_details()
+    elif choice == 2:
+        print("Exiting the program.")
+        break
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
