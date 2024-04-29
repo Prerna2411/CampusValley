@@ -1,0 +1,207 @@
+#Q1.--Create a To-Do List application using Python. Allow users to manage and organize their tasks efficiently. Users should be able to create, update, and track their to-do lists through a command-line or GUI-based interface.
+import tkinter as tk
+from tkinter import messagebox
+
+class Task:
+    def __init__(self, title, status=False):
+        self.title = title
+        self.status = status
+
+    def __str__(self):
+        return self.title + " - " + ("Done" if self.status else "Not Done")
+
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, title):
+        self.tasks.append(Task(title))
+
+    def mark_done(self, title):
+        for task in self.tasks:
+            if task.title == title:
+                task.status = True
+                return True
+        return False
+
+    def delete_task(self, title):
+        for task in self.tasks:
+            if task.title == title:
+                self.tasks.remove(task)
+                return True
+        return False
+
+    def show_tasks(self):
+        return "\n".join(str(task) for task in self.tasks)
+
+def main():
+    todo_list = ToDoList()
+
+    def add_task():
+        title = task_title.get()
+        todo_list.add_task(title)
+        task_title.set('')
+        update_tasks()
+
+    def mark_done():
+        title = task_title.get()
+        if todo_list.mark_done(title):
+            messagebox.showinfo("Success", "Task marked as done!")
+        else:
+            messagebox.showerror("Error", "Task not found!")
+        task_title.set('')
+        update_tasks()
+
+    def delete_task():
+        title = task_title.get()
+        if todo_list.delete_task(title):
+            messagebox.showinfo("Success", "Task deleted!")
+        else:
+            messagebox.showerror("Error", "Task not found!")
+        task_title.set('')
+        update_tasks()
+
+    def update_tasks():
+        tasks.delete(1.0, tk.END)
+        tasks.insert(tk.END, todo_list.show_tasks())
+
+    root = tk.Tk()
+    root.title("To-Do List")
+    root.configure(bg='purple')  # Set the background color
+
+    task_title = tk.StringVar()
+
+    tk.Entry(root, textvariable=task_title, width=50).pack()
+    tk.Button(root, text="Add Task", command=add_task).pack()
+    tk.Button(root, text="Mark Task as Done", command=mark_done).pack()
+    tk.Button(root, text="Delete Task", command=delete_task).pack()  # Add a button for deleting tasks
+
+    tasks = tk.Text(root)
+    tasks.pack()
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+
+
+#Q2.--Develop a password generator application using Python. Allow users to specify the length and complexity of the password. Generate a strong and random password based on the user's input and display it on the screen.
+
+import string
+import random
+import tkinter as tk
+from tkinter import messagebox
+
+def generate_password(length, use_uppercase=True, use_lowercase=True, use_digits=True, use_punctuation=True):
+    # Create a string of characters to choose from
+    characters = ""
+    if use_uppercase:
+        characters += string.ascii_uppercase
+    if use_lowercase:
+        characters += string.ascii_lowercase
+    if use_digits:
+        characters += string.digits
+    if use_punctuation:
+        characters += string.punctuation
+
+    # Generate a random password of the specified length
+    password = "".join(random.choice(characters) for _ in range(length))
+
+    return password
+
+def main():
+    def generate():
+        length = int(length_entry.get())
+        use_uppercase = use_uppercase_var.get()
+        use_lowercase = use_lowercase_var.get()
+        use_digits = use_digits_var.get()
+        use_punctuation = use_punctuation_var.get()
+
+        password = generate_password(length, use_uppercase, use_lowercase, use_digits, use_punctuation)
+        password_entry.delete(0, tk.END)
+        password_entry.insert(0, password)
+
+    def reset():
+        username_entry.delete(0, tk.END)
+        password_entry.delete(0, tk.END)
+        length_entry.delete(0, tk.END)
+        length_entry.insert(0, "8")
+
+    root = tk.Tk()
+    root.title("Password Generator")
+
+    username_label = tk.Label(root, text="Username", fg="blue")
+    username_label.pack()
+    username_entry = tk.Entry(root)
+    username_entry.pack()
+
+    password_label = tk.Label(root, text="Password", fg="blue")
+    password_label.pack()
+    password_entry = tk.Entry(root)
+    password_entry.pack()
+
+    length_label = tk.Label(root, text="Length", fg="blue")
+    length_label.pack()
+    length_entry = tk.Entry(root)
+    length_entry.insert(0, "8")
+    length_entry.pack()
+
+    use_uppercase_var = tk.BooleanVar(value=True)
+    use_uppercase_check = tk.Checkbutton(root, text="Use uppercase", variable=use_uppercase_var)
+    use_uppercase_check.pack()
+
+    use_lowercase_var = tk.BooleanVar(value=True)
+    use_lowercase_check = tk.Checkbutton(root, text="Use lowercase", variable=use_lowercase_var)
+    use_lowercase_check.pack()
+
+    use_digits_var = tk.BooleanVar(value=True)
+    use_digits_check = tk.Checkbutton(root, text="Use digits", variable=use_digits_var)
+    use_digits_check.pack()
+
+    use_punctuation_var = tk.BooleanVar(value=True)
+    use_punctuation_check = tk.Checkbutton(root, text="Use punctuation", variable=use_punctuation_var)
+    use_punctuation_check.pack()
+
+    generate_button = tk.Button(root, text="Generate Password", command=generate, bg="blue", fg="white")
+    generate_button.pack()
+
+    reset_button = tk.Button(root, text="Reset", command=reset, bg="blue", fg="white")
+    reset_button.pack()
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+
+
+#Q3.-Design a simple calculator with basic arithmetic operations. Prompt the user to input two numbers and an operation choice. Perform the calculation and display the result.
+num1 = float(input("Enter the first number: "))
+operator = input("Enter an arithmetic operator (+, -, *, or /): ")
+num2 = float(input("Enter the second number: "))
+
+ 
+if operator == "+":
+    result = num1 + num2
+elif operator == "-":
+    result = num1 - num2
+elif operator == "*":
+    result = num1 * num2
+elif operator == "/":
+    # Check for division by zero
+    if num2 != 0:
+        result = num1 / num2
+    else:
+        print("Error: Cannot be divided  by zero.")
+        result = None
+else:
+    print("Error: Invalid operator. Please use +, -, *, or /.")
+    result = None
+
+ #Display the result
+if result is not None:
+    print(f"Result: {result}")
+
+
+
