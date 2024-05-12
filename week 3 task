@@ -45,3 +45,40 @@ def main():
     username_label = tk.Label(root, text="Username", fg="blue")
     username_label.pack()
     username_entry = tk.Entry(root)
+    password_entry.pack()
+
+    length_label = tk.Label(root, text="Length", fg="blue")
+    length_label.pack()
+    length_entry = tk.Entry(root)
+    length_entry.insert(0, "8")
+    length_entry.pack()
+
+    use_uppercase_var = tk.BooleanVar(value=True)
+    use_uppercase_check = tk.Checkbutton(root, text="Use uppercase", variable=use_uppercase_var)
+    use_uppercase_check.pack()
+
+    use_lowercase_var = tk.BooleanVar(value=True)
+    use_lowercase_check = tk.Checkbutton(root, text="Use lowercase", variable=use_lowercase_var)
+    use_lowercase_check.pack()
+
+    use_digits_var = tk.BooleanVar(value=True)
+    use_digits_check = tk.Checkbutton(root, text="Use digits", variable=use_digits_var)
+    use_digits_check.pack()
+
+    use_punctuation_var = tk.BooleanVar(value=True)
+    use_punctuation_check = tk.Checkbutton(root, text="Use punctuation", variable=use_punctuation_var)
+    use_punctuation_check.pack()
+
+    generate_button = tk.Button(root, text="Generate Password", command=generate, bg="blue", fg="white")
+    generate_button.pack()
+
+    reset_button = tk.Button(root, text="Reset", command=reset, bg="blue", fg="white")
+    reset_button.pack()
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+
+
