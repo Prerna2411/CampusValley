@@ -19,6 +19,7 @@ def generate_password(length, use_uppercase=True, use_lowercase=True, use_digits
 
     # Generate a random password of the specified length
     password = "".join(random.choice(characters) for _ in range(length))
+
     return password
 
 def main():
@@ -45,6 +46,11 @@ def main():
     username_label = tk.Label(root, text="Username", fg="blue")
     username_label.pack()
     username_entry = tk.Entry(root)
+    username_entry.pack()
+
+    password_label = tk.Label(root, text="Password", fg="blue")
+    password_label.pack()
+    password_entry = tk.Entry(root)
     password_entry.pack()
 
     length_label = tk.Label(root, text="Length", fg="blue")
@@ -79,6 +85,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
